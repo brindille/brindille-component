@@ -9,7 +9,7 @@ const definitions = {
   AnotherComponent: AnotherComponent
 };
 const templates = {
-  notExist: '<div data-component="ComponentThatDoesNotExist"></div>',
+  fake: '<div data-component="ComponentThatDoesNotExist"></div>',
   simple: '<div data-component="TestComponent"></div>',
   nested: '<div data-component="TestComponent"><div data-component="AnotherComponent"></div></div>'
 }
@@ -22,7 +22,7 @@ describe('Component', () => {
   });
 
   it('Should be able to handle a data-component value that does not match a valid component', () => {
-    document.body.innerHTML = templates.notExist;
+    document.body.innerHTML = templates.fake;
     var rootComponent = new Component(document.body);
     expect(rootComponent._componentInstances.length).to.equal(0);
   });

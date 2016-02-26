@@ -108,7 +108,7 @@ export default class Component {
           }
         }
         else {
-          console.log(`[Warning] Can\'t find component '${componentName}'`);
+          console.warn(`[Warning] Can\'t find component '${componentName}'`);
         }
       }
     });
