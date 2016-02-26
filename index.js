@@ -85,7 +85,7 @@ export default class Component {
 
       if (node.nodeType === 1 && componentName) {
         if (node.tagName === 'FORM') {
-          console.warn(`[Warning] FORM tag does not support data-component. You should encapsulate the <form> with a <div> in component ${componentName}`);
+          console.warn(`FORM tag does not support data-component. You should encapsulate the <form> with a <div> in component ${componentName}`);
         }
 
         if (this.definitions instanceof Function) {
@@ -108,7 +108,7 @@ export default class Component {
           }
         }
         else {
-          console.warn(`[Warning] Can\'t find component '${componentName}'`);
+          console.warn(`Can\'t find component '${componentName}'`);
         }
       }
     });
