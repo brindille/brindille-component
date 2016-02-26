@@ -3,11 +3,19 @@ import walk from 'dom-walk';
 export default class Component {
   constructor($el, definitions) {
     this.$el = $el;
-    this.definitions = definitions || [];
     this.componentName = '';
     this.parent = null;
+    this.definitions = [];
     this.refs = {};
     this._componentInstances = [];
+
+    if (definitions) {
+      this.init(definitions);
+    }
+  }
+
+  init(definitions) {
+    this.definitions = definitions;
     this.parse();
   }
 
@@ -89,7 +97,8 @@ export default class Component {
 
         if (Ctor) {
           node.removeAttribute('data-component');
-          component = new Ctor(node, this.definitions);
+          component = new Ctor(node);
+          component.init(this.definitions);
           component.componentName = componentName;
           component.parent = this;
           this._componentInstances.push(component);
@@ -104,10 +113,10 @@ export default class Component {
       }
     });
 
-    this.onInit();
+    this.ready();
   }
 
-  onInit() {
+  ready() {
     // To override
   }
 }
