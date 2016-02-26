@@ -1,2 +1,2 @@
 # brindille-component
-Simple recursive component class for html views
+Simple ES6 class to build recursive html components.
