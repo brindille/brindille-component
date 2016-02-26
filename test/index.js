@@ -11,7 +11,9 @@ const definitions = {
 const templates = {
   fake: '<div data-component="ComponentThatDoesNotExist"></div>',
   simple: '<div data-component="TestComponent"></div>',
-  nested: '<div data-component="TestComponent"><div data-component="AnotherComponent"></div></div>'
+  nested: '<div data-component="TestComponent"><div data-component="AnotherComponent"></div></div>',
+  refs: '<div data-component="TestComponent" data-ref="test"></div>',
+  nestedRefs: '<div data-component="TestComponent" data-ref="test"><div data-component="AnotherComponent" data-ref="another"></div></div>'
 }
 
 describe('Component', () => {
@@ -46,4 +48,43 @@ describe('Component', () => {
     expect(rootComponent.definitions).to.equal(definitions);
     expect(rootComponent._componentInstances[0].definitions).to.equal(definitions);
   });
+
+  it('Refs attribute should be registered in parent', () => {
+    document.body.innerHTML = templates.refs;
+    var rootComponent = new Component(document.body, definitions);
+    expect(rootComponent.refs.test).to.equal(rootComponent._componentInstances[0]);
+  });
+
+  it('Nested refs should only be attributed to direct parent', () => {
+    document.body.innerHTML = templates.nestedRefs;
+    var rootComponent = new Component(document.body, definitions);
+    expect(rootComponent.refs.test).to.equal(rootComponent._componentInstances[0]);
+    expect(rootComponent.refs.test.refs.another).to.equal(rootComponent._componentInstances[0]._componentInstances[0]);
+    expect(rootComponent.refs.another).to.be.undefined;
+  });
+
+  it('Dispose method should destroy component dom node', () => {
+
+  });
+
+  it('Dispose called on parent should also dispose all children', () => {
+
+  });
+
+  it('replaceContent should launch a new parse on component', () => {
+
+  });
+
+  it('replaceContent should clear out refs and _componentInstances to replace them with new ones', () => {
+
+  });
+
+  it('findInstance should return proper instance for a given component', () => {
+
+  });
+
+  it('findInstance should return null if component was not found among instances', () => {
+
+  });
+
 });
