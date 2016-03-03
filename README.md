@@ -94,6 +94,22 @@ var MyCustomButton = (function() {
 
   // Define custom methods here
 })();
+
+
+// Or in better looking ES6
+
+
+import Component from 'brindille-component';
+
+class MyCustomButton extends Component {
+  constructor($el) {
+    super($el);
+
+    // Define custom behaviour here
+  }
+
+  // Define custom methods here
+}
 ```
 
 
