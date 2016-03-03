@@ -33,9 +33,8 @@ export default class Component {
   }
 
   replaceContent(content) {
-    const tempNode = document.createElement('div');
-    tempNode.innerHTML = content;
-    this.$el.innerHTML = tempNode.firstChild.innerHTML;
+    this.disposeChildren();
+    this.$el.innerHTML = content;
     this.parse();
   }
 
@@ -61,16 +60,9 @@ export default class Component {
 
   findAllInstances(componentName) {
     let instances = this._componentInstances.filter(value => value.componentName === componentName);
-    let instance;
 
-    if (instances && instances.length) return instances;
-
-    instances = [];
     for (let i = 0, l = this._componentInstances.length; i < l; i++) {
-      instance = this._componentInstances[i].findInstance(componentName);
-      if (instance !== undefined) {
-        instances.push(instance);
-      }
+      instances = instances.concat(this._componentInstances[i].findAllInstances(componentName));
     }
 
     return instances;
