@@ -32,9 +32,9 @@ export default class Component {
     this.refs = {};
   }
 
-  replaceContent(content) {
+  replaceContent(htmlString) {
     this.disposeChildren();
-    this.$el.innerHTML = content;
+    this.$el.innerHTML = htmlString;
     this.parse();
   }
 
