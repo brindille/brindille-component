@@ -1,12 +1,25 @@
 {
   "name": "brindille-component",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Simple ES6 class to build recursive html components.",
   "main": "lib/index.js",
   "scripts": {
-    "compile": "babel -d lib/ src/",
+    "compile": "BABEL_ENV=production babel src -d lib",
     "prepublish": "npm run compile",
-    "test": "mochify --transform babelify"
+    "test": "NODE_PATH=src ava",
+    "test:watch": "npm test -- --watch",
+    "test:coverage": "nyc npm test"
+  },
+  "ava": {
+    "require": [
+      "babel-register",
+      "./test/helpers/setup-browser-env.js"
+    ]
+  },
+  "standard": {
+    "ignore": [
+      "lib/"
+    ]
   },
   "repository": {
     "type": "git",
@@ -39,14 +52,14 @@
     "url": "https://github.com/brindille/brindille-component/issues"
   },
   "homepage": "https://github.com/brindille/brindille-component#readme",
-  "dependencies": {
-    "dom-walk": "^0.1.1"
-  },
   "devDependencies": {
+    "ava": "^0.19.1",
     "babel-cli": "^6.5.1",
+    "babel-core": "^6.24.1",
     "babel-preset-es2015": "^6.5.0",
     "babelify": "^7.2.0",
-    "chai": "^3.5.0",
-    "mochify": "^2.17.0"
+    "browser-env": "^2.0.30",
+    "nyc": "^10.2.0",
+    "sinon": "^2.1.0"
   }
 }
