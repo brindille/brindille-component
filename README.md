@@ -73,6 +73,14 @@ findAllInstances(componentName) {
   // Returns an array of component instances for a given componentName.
   // It will first look in first degree children then in children of children and so on...
 }
+
+$one(selector) {
+  // Convenience method, equivalent of this.$el.querySelector(selector)
+}
+
+$all(selector) {
+  // Convenience method, equivalent of [].slice.call(this.$el.querySelectorAll(selector))
+}
 ```
 
 ## Basic Example

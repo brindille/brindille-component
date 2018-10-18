@@ -1,6 +1,6 @@
 import test from 'ava'
 import sinon from 'sinon'
-import Component from 'index'
+import Component from '../src'
 import templates from './fixtures/templates'
 import {definitions, definitionFunction} from './fixtures/definitions'
 
@@ -156,4 +156,19 @@ test('findAllInstances should return array of nested child instances for a given
 
   t.is(searchedInstances[0], subChildOne)
   t.is(searchedInstances[1], subChildTwo)
+})
+
+test('$one', t => {
+  const rootComponent = createRootComponent(templates.simpleWithContent, definitions)
+  t.is(rootComponent.$one('.foo'), rootComponent.$el.querySelector('.foo'))
+  t.is(rootComponent.$one('.bar'), rootComponent.$el.querySelector('.bar'))
+  t.not(rootComponent.$one('.foo'), rootComponent.$el.querySelector('.bar'))
+  t.not(rootComponent.$one('.bar'), rootComponent.$el.querySelector('.two'))
+})
+
+test('$all', t => {
+  const rootComponent = createRootComponent(templates.simpleWithContent, definitions)
+  t.is(rootComponent.$all('.bar').length, 2)
+  t.not(rootComponent.$all('.bar'), rootComponent.$el.querySelectorAll('.bar'))
+  t.not(rootComponent.$all('.bar'), [].slice.call(rootComponent.$el.querySelectorAll('.bar')))
 })
