@@ -31,6 +31,24 @@ export default class Component {
   }
 
   /**
+   * Returns dom done from css selector inside this component
+   * @param {String} selector css selector
+   * @returns {HTMLElement}
+   */
+  $one (selector) {
+    return this.$el.querySelector(selector)
+  }
+
+  /**
+   * Returns an array of all node element matching selector that are inside this component
+   * @param {String} selector css selector
+   * @returns {Array<HTMLElement>}
+   */
+  $all (selector) {
+    return [].slice.call(this.$el.querySelectorAll(selector))
+  }
+
+  /**
    * This will be called either by constructor if definitions are passed or by parent's parse method.
    * Definitions all automatically passed down to children components and you most likely will not need to
    * override or call this function.

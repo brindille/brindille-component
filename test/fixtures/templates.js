@@ -5,6 +5,13 @@ export default {
   simple: `
     <div data-component="TestComponent"></div>
   `,
+  simpleWithContent: `
+    <div data-component="TestComponent">
+      <div class="foo"></div>
+      <div class="bar one"></div>
+      <div class="bar two"></div>
+    </div>
+  `,
   nested: `
     <div data-component="TestComponent">
       <div data-component="AnotherComponent"></div>
