@@ -1,8 +1,8 @@
 import test from 'ava'
 import sinon from 'sinon'
 import Component from '../src'
-import templates from './fixtures/templates'
-import {definitions, definitionFunction} from './fixtures/definitions'
+import templates from './fixtures/_templates'
+import {definitions, definitionFunction} from './fixtures/_definitions'
 
 /* -------------------------------------------------------------------------------------
   UTILS

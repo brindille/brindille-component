@@ -1,5 +1,5 @@
-import TestComponent from './components/TestComponent'
-import AnotherComponent from './components/AnotherComponent'
+import TestComponent from './components/_TestComponent'
+import AnotherComponent from './components/_AnotherComponent'
 
 export const definitions = {
   TestComponent,
