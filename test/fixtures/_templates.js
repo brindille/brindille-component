@@ -43,6 +43,13 @@ export default {
       <div data-component="TestComponent" data-ref="testTwo"></div>
     </div>
   `,
+  deeperNesting: `
+    <div data-component="AnotherComponent" data-ref="child">
+      <div data-component="TestComponent" data-ref="test">
+        <div data-component="FooComponent" data-ref="foo"></div>
+      </div>
+    </div>
+  `,
   replace: `
     <div data-component="AnotherComponent" data-ref="another"></div>
   `

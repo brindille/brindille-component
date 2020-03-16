@@ -76,6 +76,7 @@
     "babel-plugin-istanbul": "^5.2.0",
     "browser-env": "^3.3.0",
     "nyc": "^14.1.1",
+    "rewire": "^5.0.0",
     "sinon": "^6.0.0"
   }
 }
