@@ -17,7 +17,7 @@ export default class Component {
    * @param {Node} $el dom element that this component will be built around
    * @param {Object|Function} definitions Optional Object of Class Definitions or function that returns a Class Definitions from a given string
    */
-  constructor ($el, definitions = null) {
+  constructor($el, definitions = null) {
     this.$el = $el
     this.componentName = ''
     this.parent = null
@@ -35,7 +35,7 @@ export default class Component {
    * @param {String} selector css selector
    * @returns {HTMLElement}
    */
-  $one (selector) {
+  $one(selector) {
     return this.$el.querySelector(selector)
   }
 
@@ -44,7 +44,7 @@ export default class Component {
    * @param {String} selector css selector
    * @returns {Array<HTMLElement>}
    */
-  $all (selector) {
+  $all(selector) {
     return [].slice.call(this.$el.querySelectorAll(selector))
   }
 
@@ -54,7 +54,7 @@ export default class Component {
    * override or call this function.
    * @param {Object|Function} definitions Object of Class Definitions or function that returns a Class Definitions from a given string
    */
-  init (definitions) {
+  init(definitions) {
     this.definitions = definitions
     this.parse()
   }
@@ -62,7 +62,7 @@ export default class Component {
   /**
    * Call this function when you want to remove and destroy a component
    */
-  dispose () {
+  dispose() {
     this.disposeChildren()
     this.destroy()
   }
@@ -70,8 +70,8 @@ export default class Component {
   /**
    * Call dispose function of each children components
    */
-  disposeChildren () {
-    this._componentInstances.forEach((component) => {
+  disposeChildren() {
+    this._componentInstances.forEach(component => {
       component.dispose()
     })
     this._componentInstances = []
@@ -82,7 +82,7 @@ export default class Component {
    * This will trigger a total reparsing of this component after killing its current childComponents, use at your own risk
    * @param {String} htmlString new HTML to parse
    */
-  replaceContent (htmlString) {
+  replaceContent(htmlString) {
     this.disposeChildren()
     this.$el.innerHTML = htmlString
     this.parse()
@@ -91,8 +91,12 @@ export default class Component {
   /**
    * Removes component from parent if it exists and deletes dom references
    */
-  destroy () {
-    if (this.parent && this.$el.parentNode && this.$el.parentNode === this.parent.$el) {
+  destroy() {
+    if (
+      this.parent &&
+      this.$el.parentNode &&
+      this.$el.parentNode === this.parent.$el
+    ) {
       this.parent.$el.removeChild(this.$el)
     }
     this.parent = null
@@ -103,8 +107,10 @@ export default class Component {
    * Returns first instance of Component with the name given as parameter
    * @param {String} componentName name of the component to find
    */
-  findInstance (componentName) {
-    let instance = this._componentInstances.filter(value => value.componentName === componentName)
+  findInstance(componentName) {
+    let instance = this._componentInstances.filter(
+      value => value.componentName === componentName
+    )
     if (instance && instance.length) return instance[0]
 
     for (let i = 0, l = this._componentInstances.length; i < l; i++) {
@@ -119,11 +125,15 @@ export default class Component {
    * Returns all instances of Component with the name given as parameter
    * @param {String} componentName name of the component to find
    */
-  findAllInstances (componentName) {
-    let instances = this._componentInstances.filter(value => value.componentName === componentName)
+  findAllInstances(componentName) {
+    let instances = this._componentInstances.filter(
+      value => value.componentName === componentName
+    )
 
     for (let i = 0, l = this._componentInstances.length; i < l; i++) {
-      instances = instances.concat(this._componentInstances[i].findAllInstances(componentName))
+      instances = instances.concat(
+        this._componentInstances[i].findAllInstances(componentName)
+      )
     }
 
     return instances
@@ -133,14 +143,17 @@ export default class Component {
    * Looks into this component children and creates its sub components if any is found.
    * Sub component instances with data-ref attributes will be added to the refs object of current Component.
    */
-  parse () {
-    findComponents(this.$el, (node) => {
-      const componentName = node && node.getAttribute ? node.getAttribute('data-component') : ''
+  parse() {
+    findComponents(this.$el, node => {
+      const componentName =
+        node && node.getAttribute ? node.getAttribute('data-component') : ''
       let Ctor
       let component
       if (node.nodeType === 1 && componentName) {
         if (node.tagName === 'FORM') {
-          console.warn(`FORM tag does not support data-component. You should encapsulate the <form> with a <div> in component ${componentName}`)
+          console.warn(
+            `FORM tag does not support data-component. You should encapsulate the <form> with a <div> in component ${componentName}`
+          )
         }
 
         if (this.definitions instanceof Function) {
@@ -172,15 +185,15 @@ export default class Component {
   /**
    * This is where you want to put the logic of the component
    */
-  ready () {}
+  ready() {}
 }
 
 /**
  * Makes sure to put whatever obj is in an array if obj is not an array
  * @param {*} obj
  */
-function toArray (obj) {
-  return obj == null ? [] : (Array.isArray(obj) ? obj : [obj])
+function toArray(obj) {
+  return obj == null ? [] : Array.isArray(obj) ? obj : [obj]
 }
 
 /**
@@ -188,7 +201,7 @@ function toArray (obj) {
  * @param {Array} nodes an array of Node
  * @param {*} callback function to call on each Node that has data-component
  */
-function findComponents (nodes, callback) {
+function findComponents(nodes, callback) {
   nodes = toArray(nodes)
   nodes = [].slice.call(nodes)
   let node
