@@ -21,6 +21,7 @@ export default class Component {
     this.$el = $el
     this.componentName = ''
     this.parent = null
+    this.root = this
     this.definitions = []
     this.refs = {}
     this._componentInstances = []
@@ -57,6 +58,17 @@ export default class Component {
   init(definitions) {
     this.definitions = definitions
     this.parse()
+    if (this.root === this) {
+      this.onAppReady()
+    }
+  }
+
+  /**
+   * Will be called once whole nested parsing is done, DO NOT MANUALLY CALL THIS FUNCTION
+   * if you override it don't forget call to super
+   */
+  onAppReady() {
+    this._componentInstances.forEach(component => component.onAppReady())
   }
 
   /**
@@ -165,9 +177,10 @@ export default class Component {
         if (Ctor) {
           node.removeAttribute('data-component')
           component = new Ctor(node)
-          component.init(this.definitions)
           component.componentName = componentName
           component.parent = this
+          component.root = this.root
+          component.init(this.definitions)
           this._componentInstances.push(component)
 
           if (node.getAttribute('data-ref')) {
