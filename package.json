@@ -1,40 +1,21 @@
 {
   "name": "brindille-component",
-  "version": "0.0.7",
-  "description": "Simple ES6 class to build recursive html components.",
-  "main": "lib/index.js",
+  "umd:name": "brindille-component",
+  "version": "0.2.0",
+  "description": "Simple class to recursively wrap logic around html components.",
+  "unpkg": "dist/brindille-component.umd.js",
+  "module": "dist/brindille-component.module.js",
+  "main": "dist/brindille-component.js",
+  "source": "src/index.ts",
+  "types": "types/index.d.ts",
   "scripts": {
-    "start": "NODE_PATH=src ava --watch",
-    "build": "BABEL_ENV=production babel src -d lib",
-    "test": "nyc ava"
-  },
-  "ava": {
-    "require": [
-      "@babel/register",
-      "./test/helpers/_setup-browser-env.js"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ],
-    "env": {
-      "test": {
-        "plugins": [
-          "istanbul"
-        ]
-      }
-    }
+    "build": "microbundle",
+    "prepublishOnly": "npm run build",
+    "test": "uvu -r ts-node/register test --ignore fixtures",
+    "cover": "nyc npm run test"
   },
   "nyc": {
-    "require": [
-      "@babel/register"
-    ],
-    "include": [
-      "src/index.js"
-    ],
-    "sourceMap": false,
-    "instrument": false
+    "extends": "@istanbuljs/nyc-config-typescript"
   },
   "repository": {
     "type": "git",
@@ -44,6 +25,10 @@
     "brindille",
     "component",
     "view"
+  ],
+  "files": [
+    "dist",
+    "types"
   ],
   "author": {
     "name": "Guillaume Gouessan",
@@ -68,15 +53,15 @@
   },
   "homepage": "https://github.com/brindille/brindille-component#readme",
   "devDependencies": {
-    "@babel/cli": "^7.7.0",
-    "@babel/core": "^7.7.0",
-    "@babel/preset-env": "^7.7.1",
-    "@babel/register": "^7.7.0",
-    "ava": "^2.4.0",
-    "babel-plugin-istanbul": "^5.2.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "browser-env": "^3.3.0",
-    "nyc": "^14.1.1",
+    "microbundle": "^0.12.3",
+    "nyc": "^15.1.0",
     "rewire": "^5.0.0",
-    "sinon": "^6.0.0"
+    "sinon": "^9.0.3",
+    "source-map-support": "^0.5.19",
+    "ts-node": "^9.0.0",
+    "typescript": "4.0.2",
+    "uvu": "^0.3.3"
   }
 }
